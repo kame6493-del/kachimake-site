@@ -3,41 +3,205 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>カチマケ パチンコ・競馬の収支管理</title>
-<meta name="description" content="投資と回収を入れるだけ。パチンコ・パチスロ・競馬・競輪・ボートレース・オートレースの収支を帳簿のように管理するアプリ。">
-<link rel="icon" href="./favicon.svg">
+<title>パチンコ・パチスロ・競馬の収支管理アプリ カチマケ｜回収率・時給・貯玉を自動計算</title>
+<meta name="description" content="投資と回収を入れるだけで、今月の収支・回収率・時給が出る無料の収支管理アプリ。パチンコ・パチスロの貯玉/貯メダルとレート、イベント日ごとの収支、競馬・競輪・ボートの券種別回収率まで。回収率と時給の計算機つき。">
+<link rel="canonical" href="https://kame6493-del.github.io/kachimake-site/">
+<link rel="icon" href="icon.png">
+<meta property="og:title" content="パチンコ・競馬の収支管理アプリ カチマケ">
+<meta property="og:description" content="投資と回収を入れるだけ。今月いくら勝って、どこで負けているかが分かる。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kame6493-del.github.io/kachimake-site/">
+<meta property="og:image" content="https://kame6493-del.github.io/kachimake-site/ogp.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "name": "カチマケ",
+      "operatingSystem": "Android, iOS",
+      "applicationCategory": "FinanceApplication",
+      "description": "パチンコ・パチスロ・競馬・競輪・ボートレース・オートレースの収支管理アプリ。回収率・時給・貯玉を自動で計算します。",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "回収率はどう計算しますか?", "acceptedAnswer": { "@type": "Answer", "text": "回収率は「回収額 ÷ 投資額 × 100」です。投資3万円で回収3万6千円なら120%。100%を超えていれば勝ち越しです。" } },
+        { "@type": "Question", "name": "パチンコの時給はどう計算しますか?", "acceptedAnswer": { "@type": "Answer", "text": "時給は「収支 ÷ 遊技した時間」です。5時間打って+1万円なら時給2,000円。時間を記録した回だけで割るのが正確です。" } },
+        { "@type": "Question", "name": "貯玉を使った日の収支はどう数えますか?", "acceptedAnswer": { "@type": "Answer", "text": "再プレイした玉も投資に入れます。4円パチンコで1,000玉を再プレイしたなら4,000円の投資です。カチマケではレートと玉数を入れると自動で円にします。" } },
+        { "@type": "Question", "name": "カチマケは無料ですか?", "acceptedAnswer": { "@type": "Answer", "text": "記入・カレンダー・今月と先月の分析・負けの上限・シェア画像・バックアップは無料です。長い期間の分析や店ごとの収支などは有料の機能で、広告を見ると24時間使えます。" } }
+      ]
+    }
+  ]
+}
+</script>
 <style>
-  :root { --paper:#f6f4ee; --ink:#1b1a17; --sumi:#6f6a5f; --rule:#dad5c8; color-scheme: light; }
-  @media (prefers-color-scheme: dark) { :root { --paper:#15130f; --ink:#ece8de; --sumi:#9c978b; --rule:#34302a; color-scheme: dark; } }
-  body { margin:0; background:var(--paper); color:var(--ink); font:15px/1.8 -apple-system,'Hiragino Sans','Noto Sans JP',sans-serif; }
-  main { max-width:680px; margin:0 auto; padding:32px 16px 64px; }
-  h1 { font:600 22px/1.4 'Hiragino Mincho ProN','Noto Serif JP',serif; letter-spacing:.06em; margin:0 0 4px; }
-  .rule { border-bottom:1px solid var(--ink); padding-bottom:12px; position:relative; margin-bottom:20px; }
-  .rule::after { content:''; position:absolute; left:0; right:0; bottom:-5px; height:1px; background:var(--ink); }
-  img { width:100%; height:auto; display:block; margin:24px 0; }
-  ul { padding-left:1.2em; }
-  a { color:var(--ink); }
-  .note { color:var(--sumi); font-size:13px; }
+  :root { --y: #f9b712; --y-ink: #2b2100; --bg: #f2f2f7; --card: #fff; --ink: #1c1c1e; --sub: #6e6e73; --line: #e3e3e8; --win: #1f7cf0; --lose: #f0383b; color-scheme: light; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #000; --card: #1c1c1e; --ink: #f2f2f7; --sub: #a1a1a6; --line: #38383a; --win: #4a9dff; --lose: #ff5047; color-scheme: dark; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.8 -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Noto Sans JP", "Yu Gothic UI", Meiryo, sans-serif; }
+  a { color: inherit; }
+  .hero { background: var(--y); color: var(--y-ink); }
+  .hero-in { max-width: 960px; margin: 0 auto; padding: 36px 16px 32px; display: grid; gap: 24px; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 900; font-size: 20px; }
+  .brand img { width: 48px; height: 48px; border-radius: 12px; border: 3px solid var(--y-ink); }
+  h1 { font-size: 30px; line-height: 1.35; margin: 14px 0 10px; font-weight: 900; }
+  .hero p { margin: 0; font-weight: 600; }
+  .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+  .btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border-radius: 12px; font-weight: 800; text-decoration: none; }
+  .btn.dark { background: var(--y-ink); color: var(--y); }
+  .btn.light { background: rgba(255,255,255,.7); color: var(--y-ink); }
+  .hero-shots { display: flex; gap: 10px; justify-content: center; }
+  .hero-shots img { width: 46%; max-width: 200px; border-radius: 18px; border: 5px solid var(--y-ink); background: #fff; }
+  main { max-width: 960px; margin: 0 auto; padding: 8px 16px 48px; }
+  section { background: var(--card); border-radius: 16px; padding: 22px 20px; margin-top: 16px; }
+  h2 { font-size: 21px; line-height: 1.4; margin: 0 0 12px; }
+  h3 { font-size: 17px; margin: 18px 0 6px; }
+  p { margin: 0 0 10px; }
+  .feats { display: grid; gap: 12px; }
+  .feat { border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+  .feat b { display: block; font-size: 16px; }
+  .feat span { font-size: 14px; color: var(--sub); }
+  .calc { display: grid; gap: 10px; }
+  .calc label { display: flex; flex-direction: column; font-size: 13px; color: var(--sub); font-weight: 700; gap: 4px; }
+  .calc input { font: inherit; font-size: 20px; font-weight: 800; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; }
+  .result { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 6px; }
+  .result div { background: var(--bg); border-radius: 10px; padding: 10px; text-align: center; }
+  .result small { display: block; font-size: 12px; color: var(--sub); font-weight: 700; }
+  .result strong { font-size: 20px; font-variant-numeric: tabular-nums; }
+  .plus { color: var(--win); } .minus { color: var(--lose); }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th { white-space: nowrap; }
+  th, td { border-bottom: 1px solid var(--line); padding: 8px 6px; text-align: left; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  .steps { margin: 6px 0 0; padding-left: 1.3em; }
+  .note { font-size: 13px; color: var(--sub); }
+  footer { text-align: center; font-size: 13px; color: var(--sub); padding: 8px 16px 40px; }
+  @media (min-width: 760px) {
+    .hero-in { grid-template-columns: 1.15fr 1fr; padding: 56px 24px; }
+    h1 { font-size: 38px; }
+    .feats { grid-template-columns: 1fr 1fr; }
+    .calc { grid-template-columns: 1fr 1fr 1fr; align-items: end; }
+    .calc .result { grid-column: 1 / -1; }
+  }
 </style>
 </head>
 <body>
-<main>
-<div class="rule">
-  <h1>カチマケ</h1>
-  <p>パチンコ・パチスロ・競馬・競輪・ボートレース・オートレースの収支管理</p>
+<div class="hero">
+  <div class="hero-in">
+    <div>
+      <div class="brand"><img src="icon.png" alt="" width="48" height="48">カチマケ</div>
+      <h1>パチンコ・パチスロ・競馬の収支を、30秒で記録。</h1>
+      <p>投資と回収を入れるだけで、今月の収支・回収率・時給が出ます。どの店・どの台・どの買い方で負けているかも、表で分かります。</p>
+      <div class="cta">
+        <a class="btn dark" href="#tester">Android テスターになる</a>
+        <a class="btn light" href="#calc">回収率・時給を計算する</a>
+      </div>
+    </div>
+    <div class="hero-shots">
+      <img src="shot-home.jpg" alt="カレンダーで月の収支と日ごとの勝ち負けを見る画面" width="200" height="433">
+      <img src="shot-analysis.jpg" alt="回収率・時給・種類ごとの収支を見る分析画面" width="200" height="433">
+    </div>
+  </div>
 </div>
-<p>投資と回収、2つの金額を入れるだけで、その月の収支・回収率・時給が出ます。赤字は朱、黒字は墨。帳簿と同じ読み方です。</p>
-<img src="./feature.png" alt="今月、いくら勝った? という問いと、帳面の写真">
-<ul>
-  <li>日ごとの収支がひと目で分かるカレンダー</li>
-  <li>月の負けの上限を決めておくと、近づいたときに知らせる</li>
-  <li>店舗・機種・曜日・券種ごとの収支(有料プラン)</li>
-  <li>小役カウンターと設定の推測(推測は有料プラン)</li>
-  <li>記入は端末の中だけに保存</li>
-</ul>
-<p>App Store と Google Play で公開準備中です。</p>
-<p><a href="./support.html">サポート</a> ・ <a href="./privacy.html">プライバシーポリシー</a> ・ <a href="./terms.html">利用規約</a></p>
-<p class="note">パチンコ・パチスロは18歳未満、公営競技の投票は20歳未満の方は法律で禁止されています。本アプリは収支を記録するための道具で、賭け事そのものは提供しません。</p>
+
+<main>
+  <section aria-labelledby="feat">
+    <h2 id="feat">カチマケでできること</h2>
+    <div class="feats">
+      <div class="feat"><b>パチンコ・パチスロ・競馬・競輪・ボート・オート</b><span>全部ひとつのカレンダーで。種類ごとの回収率も比べられます。</span></div>
+      <div class="feat"><b>貯玉・貯メダルとレート</b><span>4円・1円・20円・5円などのレートと玉数を入れると、円にして収支に入れます。店ごとの残りも分かります。</span></div>
+      <div class="feat"><b>イベント日・特定日の収支</b><span>記入に印を付けておけば「イベント日だけの回収率」が出ます。</span></div>
+      <div class="feat"><b>店・機種・曜日・券種ごとの収支</b><span>どこで勝ち、どこで負けているかが表になります。</span></div>
+      <div class="feat"><b>小役カウンターと設定の推測</b><span>ホールで押しやすい大きなボタン。数えた小役から設定ごとの確率を計算します。</span></div>
+      <div class="feat"><b>勝った月は画像でシェア</b><span>今月の収支や大勝ちを、X や LINE に送れる画像にします。</span></div>
+    </div>
+  </section>
+
+  <section id="calc" aria-labelledby="calc-h">
+    <h2 id="calc-h">回収率・時給の計算機</h2>
+    <p>その日の数字を入れると、収支・回収率・時給がすぐに出ます(この計算機は入力をどこにも送りません)。</p>
+    <div class="calc">
+      <label>投資(円)<input id="in" inputmode="numeric" value="30000"></label>
+      <label>回収(円)<input id="out" inputmode="numeric" value="36000"></label>
+      <label>遊技時間(時間)<input id="hr" inputmode="decimal" value="5"></label>
+      <div class="result" aria-live="polite">
+        <div><small>収支</small><strong id="r-p">+¥6,000</strong></div>
+        <div><small>回収率</small><strong id="r-r">120%</strong></div>
+        <div><small>時給</small><strong id="r-h">+¥1,200</strong></div>
+      </div>
+    </div>
+    <h3>計算のしかた</h3>
+    <table>
+      <tr><th>回収率</th><td>回収 ÷ 投資 × 100。100% を超えれば勝ち越し</td></tr>
+      <tr><th>時給</th><td>収支 ÷ 遊技した時間。時間を記録した回だけで割る</td></tr>
+      <tr><th>勝率</th><td>勝った回数 ÷(勝った回数 + 負けた回数)。±0 の日は数えない</td></tr>
+    </table>
+  </section>
+
+  <section aria-labelledby="stock">
+    <h2 id="stock">貯玉・貯メダルを使った日の収支の数え方</h2>
+    <p>貯玉で再プレイした分も、お金を入れたのと同じ「投資」です。数えないと、実際より勝っているように見えてしまいます。</p>
+    <table>
+      <tr><th>レート</th><th>1,000玉(枚)を円にすると</th></tr>
+      <tr><td>4円パチンコ</td><td class="n">¥4,000</td></tr>
+      <tr><td>1円パチンコ</td><td class="n">¥1,000</td></tr>
+      <tr><td>20円スロット</td><td class="n">¥20,000</td></tr>
+      <tr><td>5円スロット</td><td class="n">¥5,000</td></tr>
+    </table>
+    <p class="note">例: 4円パチンコで現金1万円と再プレイ1,000玉を使い、2,500玉を貯玉にして終わったら、投資 ¥14,000・回収 ¥10,000・収支 -¥4,000。カチマケではレートと玉数を入れるだけで、この計算をします。</p>
+  </section>
+
+  <section aria-labelledby="shots-h">
+    <h2 id="shots-h">画面</h2>
+    <div class="hero-shots" style="justify-content:flex-start;flex-wrap:wrap">
+      <img src="shot-form.jpg" alt="種類・レート・投資・回収を選んで記入する画面" width="200" height="433" loading="lazy" style="border-color:var(--line)">
+      <img src="shot-counter.jpg" alt="小役カウンターと設定の推測の画面" width="200" height="433" loading="lazy" style="border-color:var(--line)">
+    </div>
+  </section>
+
+  <section id="tester" aria-labelledby="tester-h">
+    <h2 id="tester-h">Android 版のテスターを募集しています</h2>
+    <p>Google Play で公開するために、14日間テストに参加してくれる方を探しています。入れておくだけで大丈夫です。</p>
+    <ol class="steps">
+      <li><a href="https://groups.google.com/g/kachimake-testers">テスター用のグループ</a>に参加する(Google アカウントで1回押すだけ。メールは届きません)</li>
+      <li><a href="https://play.google.com/apps/testing/jp.kachimake.app">テスト参加のページ</a>で「テスターになる」を押し、Google Play から入れる</li>
+    </ol>
+    <p class="note">iPhone 版は準備中です。</p>
+  </section>
+
+  <section aria-labelledby="faq">
+    <h2 id="faq">よくある質問</h2>
+    <h3>無料で使えますか?</h3>
+    <p>記入・カレンダー・今月と先月の分析・負けの上限・シェア画像・バックアップは無料です。長い期間の分析や店ごとの収支などは有料の機能で、広告を1本見ると24時間使えます。</p>
+    <h3>記入した収支はどこに保存されますか?</h3>
+    <p>端末の中だけです。サーバーには送りません。バックアップのファイルを書き出して、機種変更のときに戻せます。</p>
+    <h3>競馬の券種ごとの回収率も出ますか?</h3>
+    <p>出ます。単勝・馬連・3連複・3連単などを記入しておくと、券種ごとの回収率と収支が表になります。</p>
+    <p><a href="support.html">使い方とサポート</a></p>
+  </section>
 </main>
+
+<footer>
+  <p>カチマケは収支を記録するための道具で、賭け事そのものは提供しません。パチンコ・パチスロは18歳未満、公営競技の投票は20歳未満の方は法律で禁止されています。</p>
+  <p><a href="privacy.html">プライバシーポリシー</a> ・ <a href="terms.html">利用規約</a> ・ <a href="https://kame6493-del.github.io/">ほかのアプリ</a></p>
+</footer>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+  const num = (v) => Number(String(v).replace(/[^\d.]/g, '')) || 0;
+  const yen = (n) => (n > 0 ? '+' : n < 0 ? '-' : '±') + '¥' + Math.abs(Math.round(n)).toLocaleString('ja-JP');
+  function calc() {
+    const i = num($('in').value), o = num($('out').value), h = num($('hr').value), p = o - i;
+    const set = (id, text, sign) => { const e = $(id); e.textContent = text; e.className = sign > 0 ? 'plus' : sign < 0 ? 'minus' : ''; };
+    set('r-p', yen(p), p);
+    set('r-r', i > 0 ? Math.round((o / i) * 1000) / 10 + '%' : '—', i > 0 ? o - i : 0);
+    set('r-h', h > 0 ? yen(p / h) : '—', h > 0 ? p : 0);
+  }
+  ['in', 'out', 'hr'].forEach((id) => $(id).addEventListener('input', calc));
+  calc();
+</script>
 </body>
 </html>
