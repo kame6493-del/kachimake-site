@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>パチンコ・パチスロ・競馬の収支管理アプリ カチマケ｜回収率・時給・貯玉を自動計算</title>
-<meta name="description" content="投資と回収を入れるだけで、今月の収支・回収率・時給が出る無料の収支管理アプリ。パチンコ・パチスロの貯玉/貯メダルとレート、イベント日ごとの収支、競馬・競輪・ボートの券種別回収率まで。回収率と時給の計算機つき。">
+<meta name="description" content="投資と回収を入れるだけで、今月の収支・回収率・時給が出る収支管理アプリ(Android)。パチンコ・パチスロの貯玉/貯メダルとレート、イベント日ごとの収支、競馬・競輪・ボートの券種別回収率まで。回収率と時給の計算機つき。">
 <link rel="canonical" href="https://kame6493-del.github.io/kachimake-site/">
 <link rel="icon" href="icon.png">
 <meta property="og:title" content="パチンコ・競馬の収支管理アプリ カチマケ">
@@ -20,10 +20,10 @@
     {
       "@type": "SoftwareApplication",
       "name": "カチマケ",
-      "operatingSystem": "Android, iOS",
+      "operatingSystem": "Android",
+      "downloadUrl": "https://play.google.com/store/apps/details?id=jp.kachimake.app",
       "applicationCategory": "FinanceApplication",
-      "description": "パチンコ・パチスロ・競馬・競輪・ボートレース・オートレースの収支管理アプリ。回収率・時給・貯玉を自動で計算します。",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" }
+      "description": "パチンコ・パチスロ・競馬・競輪・ボートレース・オートレースの収支管理アプリ。回収率・時給・貯玉を自動で計算します。"
     },
     {
       "@type": "FAQPage",
@@ -31,7 +31,7 @@
         { "@type": "Question", "name": "回収率はどう計算しますか?", "acceptedAnswer": { "@type": "Answer", "text": "回収率は「回収額 ÷ 投資額 × 100」です。投資3万円で回収3万6千円なら120%。100%を超えていれば勝ち越しです。" } },
         { "@type": "Question", "name": "パチンコの時給はどう計算しますか?", "acceptedAnswer": { "@type": "Answer", "text": "時給は「収支 ÷ 遊技した時間」です。5時間打って+1万円なら時給2,000円。時間を記録した回だけで割るのが正確です。" } },
         { "@type": "Question", "name": "貯玉を使った日の収支はどう数えますか?", "acceptedAnswer": { "@type": "Answer", "text": "再プレイした玉も投資に入れます。4円パチンコで1,000玉を再プレイしたなら4,000円の投資です。カチマケではレートと玉数を入れると自動で円にします。" } },
-        { "@type": "Question", "name": "カチマケは無料ですか?", "acceptedAnswer": { "@type": "Answer", "text": "記入・カレンダー・今月と先月の分析・負けの上限・シェア画像・バックアップは無料です。長い期間の分析や店ごとの収支などは有料の機能で、広告を見ると24時間使えます。" } }
+        { "@type": "Question", "name": "記入した収支はどこに保存されますか?", "acceptedAnswer": { "@type": "Answer", "text": "端末の中だけです。サーバーには送りません。バックアップのファイルを書き出して、機種変更のときに戻せます。" } }
       ]
     }
   ]
@@ -54,7 +54,7 @@
   .btn.dark { background: var(--y-ink); color: var(--y); }
   .btn.light { background: rgba(255,255,255,.7); color: var(--y-ink); }
   .hero-shots { display: flex; gap: 10px; justify-content: center; }
-  .hero-shots img { width: 46%; max-width: 200px; border-radius: 18px; border: 5px solid var(--y-ink); background: #fff; }
+  .hero-shots img { width: 46%; max-width: 220px; height: auto; border-radius: 18px; border: 5px solid var(--y-ink); background: #fff; }
   main { max-width: 960px; margin: 0 auto; padding: 8px 16px 48px; }
   section { background: var(--card); border-radius: 16px; padding: 22px 20px; margin-top: 16px; }
   h2 { font-size: 21px; line-height: 1.4; margin: 0 0 12px; }
@@ -96,13 +96,13 @@
       <h1>パチンコ・パチスロ・競馬の収支を、30秒で記録。</h1>
       <p>投資と回収を入れるだけで、今月の収支・回収率・時給が出ます。どの店・どの台・どの買い方で負けているかも、表で分かります。</p>
       <div class="cta">
-        <a class="btn dark" href="#tester">Android テスターになる</a>
+        <a class="btn dark" href="https://play.google.com/store/apps/details?id=jp.kachimake.app">Google Play で見る</a>
         <a class="btn light" href="#calc">回収率・時給を計算する</a>
       </div>
     </div>
     <div class="hero-shots">
-      <img src="shot-home.jpg" alt="カレンダーで月の収支と日ごとの勝ち負けを見る画面" width="200" height="433">
-      <img src="shot-analysis.jpg" alt="回収率・時給・種類ごとの収支を見る分析画面" width="200" height="433">
+      <img src="v2-1_home.jpg" alt="今月の収支・回収率・日別の推移を見るホーム画面" width="540" height="960">
+      <img src="v2-4_analysis.jpg" alt="合計収支・回収率・月間収支の推移を見る分析画面" width="540" height="960">
     </div>
   </div>
 </div>
@@ -116,7 +116,7 @@
       <div class="feat"><b>イベント日・特定日の収支</b><span>記入に印を付けておけば「イベント日だけの回収率」が出ます。</span></div>
       <div class="feat"><b>店・機種・曜日・券種ごとの収支</b><span>どこで勝ち、どこで負けているかが表になります。</span></div>
       <div class="feat"><b>小役カウンターと設定の推測</b><span>ホールで押しやすい大きなボタン。数えた小役から設定ごとの確率を計算します。</span></div>
-      <div class="feat"><b>勝った月は画像でシェア</b><span>今月の収支や大勝ちを、X や LINE に送れる画像にします。</span></div>
+      <div class="feat"><b>月の負けの上限</b><span>上限を決めておくと、使った額が上限の80%に近づいたときにホームでお知らせします。</span></div>
     </div>
   </section>
 
@@ -157,33 +157,21 @@
   <section aria-labelledby="shots-h">
     <h2 id="shots-h">画面</h2>
     <div class="hero-shots" style="justify-content:flex-start;flex-wrap:wrap">
-      <img src="shot-form.jpg" alt="種類・レート・投資・回収を選んで記入する画面" width="200" height="433" loading="lazy" style="border-color:var(--line)">
-      <img src="shot-counter.jpg" alt="小役カウンターと設定の推測の画面" width="200" height="433" loading="lazy" style="border-color:var(--line)">
+      <img src="v2-2_form.jpg" alt="種目・レート・使った額・戻った額を入れる記入画面" width="540" height="960" loading="lazy" style="border-color:var(--line)">
+      <img src="v2-8_counter.jpg" alt="小役カウンターの画面" width="540" height="960" loading="lazy" style="border-color:var(--line)">
     </div>
   </section>
 
   <section id="tester" aria-labelledby="tester-h">
-    <h2 id="tester-h">Android 版のテスターを募集しています</h2>
-    <p>Google Play で公開するために、14日間テストに参加してくれる方を探しています。入れておくだけで大丈夫です。</p>
-    <ol class="steps">
-      <li><a href="https://groups.google.com/g/kachimake-testers">テスター用のグループ</a>に参加する(Google アカウントで1回押すだけ。メールは届きません)</li>
-      <li><a href="https://play.google.com/apps/testing/jp.kachimake.app">テスト参加のページ</a>で「テスターになる」を押す</li>
-      <li><a href="https://play.google.com/store/apps/details?id=jp.kachimake.app">Google Play のカチマケ</a>から入れる</li>
-    </ol>
-    <h3>うまく参加できないとき</h3>
-    <ul class="note">
-      <li>X のアプリの中で開くと、Google のログインが引き継がれないことがあります。右上のメニューから「Chrome で開く」を選んでください。</li>
-      <li>グループとテスト参加は、スマホの Google Play と同じ Google アカウントで押してください。</li>
-      <li>グループに入った直後は、Google Play に出てくるまで数分〜数時間かかることがあります。少し待ってから開き直してください。</li>
-    </ul>
-    <p class="note">iPhone 版は準備中です。</p>
+    <h2 id="tester-h">Android 版を Google Play で公開しました</h2>
+    <p>テストに参加してくださった皆さん、ありがとうございました。いまは Google Play から入れられます。18歳以上の方向けのアプリです。</p>
+    <p><a class="btn dark" style="background:var(--y);color:var(--y-ink)" href="https://play.google.com/store/apps/details?id=jp.kachimake.app">Google Play で見る</a></p>
+    <p class="note">画面と使い方は<a href="https://yurustudio.github.io/kachimake/">カチマケの紹介ページ</a>にもまとめています。iPhone 版はいまはありません。</p>
   </section>
 
   <section aria-labelledby="faq">
     <h2 id="faq">よくある質問</h2>
-    <h3>無料で使えますか?</h3>
-    <p>記入・カレンダー・今月と先月の分析・負けの上限・シェア画像・バックアップは無料です。長い期間の分析や店ごとの収支などは有料の機能で、広告を1本見ると24時間使えます。</p>
-    <h3>記入した収支はどこに保存されますか?</h3>
+        <h3>記入した収支はどこに保存されますか?</h3>
     <p>端末の中だけです。サーバーには送りません。バックアップのファイルを書き出して、機種変更のときに戻せます。</p>
     <h3>競馬の券種ごとの回収率も出ますか?</h3>
     <p>出ます。単勝・馬連・3連複・3連単などを記入しておくと、券種ごとの回収率と収支が表になります。</p>
